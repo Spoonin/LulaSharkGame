@@ -1,24 +1,45 @@
-import Phaser from 'phaser';
+import Phaser from 'phaser'
 
 export default class Demo extends Phaser.Scene {
-  constructor() {
-    super('GameScene');
-  }
+    constructor() {
+        const config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 200 },
+                },
+            },
+        }
+        super(config)
+    }
 
-  preload() {
-    this.load.image('logo', 'assets/phaser3-logo.png');
-  }
+    preload() {
+        this.load.setBaseURL('http://labs.phaser.io')
 
-  create() {
-    const logo = this.add.image(400, 70, 'logo');
+        this.load.image('sky', 'assets/skies/space3.png')
+        this.load.image('logo', 'assets/sprites/phaser3-logo.png')
+        this.load.image('red', 'assets/particles/red.png')
+    }
 
-    this.tweens.add({
-      targets: logo,
-      y: 350,
-      duration: 1500,
-      ease: 'Sine.inOut',
-      yoyo: true,
-      repeat: -1
-    });
-  }
+    create() {
+        this.add.image(400, 300, 'sky')
+        const particles = this.add.particles('red')
+
+        const emitter = particles.createEmitter({
+            speed: 100,
+            scale: { start: 1, end: 0 },
+            blendMode: 'ADD',
+        })
+
+        const logo = this.physics.add.image(400, 100, 'logo')
+
+        logo.setVelocity(100, 200)
+        logo.setBounce(1, 1)
+        logo.setCollideWorldBounds(true)
+
+        emitter.startFollow(logo)
+    }
 }
