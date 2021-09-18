@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-export default {
+export const config = {
     type: Phaser.AUTO,
     parent: 'game',
     backgroundColor: '#33A5E7',
@@ -8,6 +8,19 @@ export default {
         width: 800,
         height: 600,
         mode: Phaser.Scale.FIT,
-        auto_center: Phaser.Scale.CENTER_BOTH,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    loader: {
+        baseURL: 'https://labs.phaser.io',
+        crossOrigin: 'anonymous',
+    },
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+            debugShowBody: true,
+        },
     },
 }
+
+export default config
