@@ -48,7 +48,7 @@ export default class Demo extends Phaser.Scene {
         // Also see alternative method in
         // <https://codepen.io/samme/pen/gOpPLLx>
 
-        this.physics.accelerateToObject(this.#ship, pointer, 600, 3000, 3000)
+        // this.physics.accelerateToObject(this.#ship, pointer, 600, 3000, 3000)
 
         const angleToPointer = Phaser.Math.Angle.Between(this.#ship.x, this.#ship.y, pointer.worldX, pointer.worldY)
         const angleDelta = Phaser.Math.Angle.Wrap(angleToPointer - this.#ship.rotation)
@@ -65,6 +65,7 @@ export default class Demo extends Phaser.Scene {
     update(): void {
         const pointer = this.input.activePointer as unknown as Phaser.Input.Pointer & GameObjects.GameObject
         this.#pointerMove(pointer)
-        velocityFromRotation(this.#ship.rotation, SPEED, this.#ship.body.velocity)
+        const distance = Phaser.Math.Distance.Between(this.#ship.x, this.#ship.y, pointer.x, pointer.y)
+        velocityFromRotation(this.#ship.rotation, SPEED * (1 + distance / 100), this.#ship.body.velocity)
     }
 }
