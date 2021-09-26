@@ -37,8 +37,8 @@ export default class Demo extends Phaser.Scene {
         const particles = this.add.particles('red')
 
         this.#emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 1, end: 0 },
+            speed: SPEED,
+            scale: { start: 0.2, end: 0 },
             blendMode: 'ADD',
         })
     }
@@ -66,6 +66,6 @@ export default class Demo extends Phaser.Scene {
         const pointer = this.input.activePointer as unknown as Phaser.Input.Pointer & GameObjects.GameObject
         this.#pointerMove(pointer)
         const distance = Phaser.Math.Distance.Between(this.#ship.x, this.#ship.y, pointer.x, pointer.y)
-        velocityFromRotation(this.#ship.rotation, SPEED * (1 + distance / 100), this.#ship.body.velocity)
+        velocityFromRotation(this.#ship.rotation, SPEED * (1 + distance / SPEED), this.#ship.body.velocity)
     }
 }
